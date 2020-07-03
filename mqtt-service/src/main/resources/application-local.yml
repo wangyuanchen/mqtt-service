@@ -1,0 +1,76 @@
+server:
+  port: 18080
+
+logging:
+  level:
+    root: info
+    com.aisino.social.mqtt.service.controller: DEBUG
+
+    
+eureka:
+  host: ${EUREKA_HOST:localhost}
+  port: ${EUREKA_HOST:8761}
+  username: discovery
+  password: 3GfhPZQifTpVcu
+  client:
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://${eureka.username}:${eureka.password}@${eureka.host}:${eureka.port}/eureka/
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+
+##################
+#  MQTT 配置
+##################
+# 用户名
+mqtt:
+  username: admin
+# 密码
+  password: public
+# 推送信息的连接地址，如果有多个，用逗号隔开，如：tcp://127.0.0.1:61613,tcp://192.168.1.61:61613
+  url: tcp://172.19.1.230:1883
+##################
+#  MQTT 生产者
+##################
+# 连接服务器默认客户端ID
+  producer:
+    clientId: serverMqttProducer
+# 默认的推送主题，实际可在调用接口时指定
+    defaultTopic: producerDefaultTopic
+##################
+#  MQTT 消费者
+##################
+# 连接服务器默认客户端ID
+  consumer:
+    clientId: serverMqttConsumer
+# 默认的接收主题，可以订阅多个Topic，逗号分隔
+    defaultTopic: consumerDefaultTopic
+ 
+# emqhttp相关api路径配置 
+emq:
+  httpapiurl:
+    # 是否开启
+    enable: true
+    # 域名:端口
+    baseUrl: http://172.19.1.230:8080
+    appId: 566e3f9741c04
+    appSecret: MjkwNDEyMzgxMTM0NDg4MzQ5MDAzNTE5MDM4OTQ4NjM4NzC
+    # List available clientid in the cluster
+    getSessionListUrl: /api/v3/sessions
+    # Lookup clientid in the cluster
+    getSessionIdUrl: /api/v3/sessions/{clientid}
+    # A list of connections in the cluster
+    getConnectionListUrl: /api/v3/connections/
+    # Lookup a connection in the cluster
+    getConnectionIdUrl: /api/v3/connections/{clientid}
+ 
+# resttemplate超时配置 
+resttemplate:
+  connection:
+    timeout: 5000
+  read:
+    timeout: 5000
+    
+    
